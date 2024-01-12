@@ -42,7 +42,7 @@ const addTodo = (event) => {
       <TransitionGroup name="list">
         <div
           v-for="(todoItem, todoItemIndex) in todoItems"
-          :key="todoItemIndex"
+          :key="todoItem.id"
           class="bg-white rounded-lg px-6 py-3 text-gray-700 font-medium text-sm flex gap-2 items-center"
         >
           <input v-model="todoItem.completed" type="checkbox" />
@@ -86,3 +86,18 @@ const addTodo = (event) => {
   transform: translateX(30px);
 }
 </style>
+
+<!-- 
+  at first, it wasn't clear what was causing the issue
+  but after i made sure the transition styles were ok, i checked the looped element and saw that index was used for the key
+  that hinted a clear indication that transition was failing because of keys getting updated when removing todos
+-->
+
+<!--
+  my thoughts:
+
+  if this was build with react, i'd have probably used `@formkit/auto-animate`.
+  its mind blowing for me that something as complex as the TransitionGroup is part of the vue built-ins
+
+  its a good balance between nice looking code and not being black magicy
+-->
